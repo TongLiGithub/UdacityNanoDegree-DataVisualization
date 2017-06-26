@@ -1,10 +1,8 @@
----
-title: "Data Visualization with Dimple js"
-author: "Tong Li"
-date: "June 25, 2017"
-output: html_document
----
-
+# Data Visualization with Dimple js
+#### *Tong Li, June 25, 2017*
+            
+             
+                                 
 ## Summary
 In this project I visualized the relationship between passengers' survival (whether they were survived or perished) on Titanic and passengers' gender, class aboard, and number of siblings/spouses traveled with them.     
                   
