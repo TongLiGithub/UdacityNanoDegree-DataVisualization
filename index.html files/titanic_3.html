@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
   <style>
     h2 {
@@ -91,8 +91,8 @@
           myChart3.addLegend(80, 50, 380, 40, "left");
 
           svg.append("text")
-             .attr("x", myChart2._xPixels() + myChart2._widthPixels() / 2)
-             .attr("y", myChart2._yPixels() - 20)
+             .attr("x", myChart3._xPixels() + myChart3._widthPixels() / 2)
+             .attr("y", myChart3._yPixels() - 20)
              .style("text-anchor", "middle")
              .style("font-weight", "bold")
              .text("Survival by Age Group");
@@ -105,7 +105,7 @@
   </head>
 <body>
   <script type="text/javascript">  
-  d3.csv("titanic2.csv", draw);
+  d3.csv("../data/titanic2.csv", draw);
   </script>
 </body>
 </html>

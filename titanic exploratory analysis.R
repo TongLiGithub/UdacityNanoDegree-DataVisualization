@@ -80,7 +80,7 @@ model5 <- glm(Survived ~ Pclass*Sex+SibSp_category+Age_group, family = binomial(
                    data = subdata)
 summary(model5)
 
-model6 <- glm(Survived ~ Pclass*Sex+Age_group*SibSp_category, family = binomial(link = "logit"), 
+model6 <- glm(Survived ~ Pclass*Sex+SibSp_category*Sex+Age_group, family = binomial(link = "logit"), 
               data = subdata)
 summary(model6)
 

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
   <style>
     h2 {
@@ -12,7 +12,10 @@
 
   <div id="area1"></div>
   <div id="area2"></div>
-  <div id="area3"></div> 	
+  <div id="area3"></div> 
+  <div id="area4"></div>
+  <div id="area5"></div>
+  <div id="area6"></div> 	
 
     <script type="text/javascript">
       
@@ -25,70 +28,18 @@
         // 1 - Titanic perished and survived by class and gender //         
           var svg = d3.select("#area1")
                       .append("svg")
-                      .attr("width", width)
-                      .attr("height", height)
-                      .append('g')
-                      .attr('class','chart');      
-
-
-          var myChart1 = new dimple.chart(svg, data);
-          var x = myChart1.addCategoryAxis("x", ["Pclass", "Sex"]);
-          var y = myChart1.addMeasureAxis("y", "count");
-          myChart1.addSeries('Survival', dimple.plot.bar);
-          myChart1.addLegend(80, 50, 380, 40, "left");
-
-          svg.append("text")
-             .attr("x", myChart1._xPixels() + myChart1._widthPixels() / 2)
-             .attr("y", myChart1._yPixels() - 20)
-             .style("text-anchor", "middle")
-             .style("font-weight", "bold")
-             .text("Survival by Class and Sex of Passengers");
-   
-          myChart1.draw();
-          
-
-        // 2 - Titanic perished and survived based on number of siblings/spouse // 
-
-          var svg = d3.select("#area2")
-                      .append("svg")
-                      .attr("width", width)
-                      .attr("height", height)
-                      .append('g')
-                      .attr('class','chart');      
-
-
-          var myChart2 = new dimple.chart(svg, data);          
-          var x = myChart2.addCategoryAxis("x", "SibSp_category");
-          var y = myChart2.addMeasureAxis("y", "count");
-          myChart2.addSeries('Survival', dimple.plot.bar);
-          myChart2.addLegend(250, 50, 380, 40, "left");
-
-          svg.append("text")
-             .attr("x", myChart2._xPixels() + myChart2._widthPixels() / 2)
-             .attr("y", myChart2._yPixels() - 20)
-             .style("text-anchor", "middle")
-             .style("font-weight", "bold")
-             .text("Survival by Number of Siblings and Spouse Aboard");
- 
-          myChart2.draw();
-
-
-        // 3 - Titanic perished and survived by age group // 
-          var svg = d3.select("#area3")
-                      .append("svg")
                       .attr("width", 590)
                       .attr("height", 400)
                       .append('g')
-                      .attr('class','chart');
-      
-          // Filter for age group 
-          data = dimple.filterData(data, "Age_group", ["0-20", "20-40", "40-60", "60+", "NA"]);
+                      .attr('class','chart');     
 
-          // Create the indicator chart on the right of the main chart
+         // Filter for Sex 
+          data = dimple.filterData(data, "Sex", ["female", "male"]);
+
+         // Create the indicator chart on the right of the main chart
           var indicator = new dimple.chart(svg, data);
 
-
-          // Pick light green as the default and purple for the selected age
+         // Pick light green as the default and purple for the selected age
           var defaultColor = indicator.defaultColors[3];
           var indicatorColor = indicator.defaultColors[5];
 
@@ -101,10 +52,10 @@
           indicator.setBounds(435, 100, 153, 250);
 
           // Add age groups along the y axis
-          var y = indicator.addCategoryAxis("y", "Age_group");
-          y.addOrderRule(["0-20", "20-40", "40-60", "60+", "NA"], "Desc");
+          var y = indicator.addCategoryAxis("y", "Sex");
+          y.addOrderRule(["female", "male"]);
 
-          // Use count for bar size and hide the axis
+         // Use count for bar size and hide the axis
           var x = indicator.addMeasureAxis("x", "count");
           x.hidden = true;
 
@@ -148,40 +99,38 @@
           s.shapes
                   .attr("rx", 10)
                   .attr("ry", 10)
-                  .style("fill", function (d) { return (d.y === '0-20' ? indicatorColor.fill : defaultColor.fill) })
-                  .style("stroke", function (d) { return (d.y === '0-20' ? indicatorColor.stroke : defaultColor.stroke) })
+                  .style("fill", function (d) { return (d.y === 'female' ? indicatorColor.fill : defaultColor.fill) })
+                  .style("stroke", function (d) { return (d.y === 'female' ? indicatorColor.stroke : defaultColor.stroke) })
                   .style("opacity", 0.4);
 
 
           // Draw the main chart
-          var myChart3 = new dimple.chart(svg, data);
-          myChart3.setBounds(60, 50, 355, 310)
-          var x = myChart3.addCategoryAxis("x", "Pclass");
-          var y = myChart3.addPctAxis("y", "count");
-          myChart3.addSeries("Survival", dimple.plot.bar);
-          myChart3.addLegend(435, 40, 380, 20, "left");
+          var myChart1 = new dimple.chart(svg, data);
+          myChart1.setBounds(60, 50, 355, 310)
+          var x = myChart1.addCategoryAxis("x", "Pclass");
+          var y = myChart1.addPctAxis("y", "count");
+          myChart1.addSeries("Survival", dimple.plot.bar);
+          myChart1.addLegend(435, 40, 380, 20, "left");
 
           svg.append("text")
-             .attr("x", myChart3._xPixels() + myChart3._widthPixels() / 2)
-             .attr("y", myChart3._yPixels() - 20)
+             .attr("x", myChart1._xPixels() + myChart1._widthPixels() / 2)
+             .attr("y", myChart1._yPixels() - 20)
              .style("text-anchor", "middle")
              .style("font-weight", "bold")
-             .text("Survival Rate by Age Group and Passengers' Class");
-
+             .text("Survival Rate by Class for Female and Male Passengers");
 
           // Add a storyboard to the main chart and set the tick event
-          var story = myChart3.setStoryboard("Age_group", onTick);
+          var story = myChart1.setStoryboard("Sex", onTick);
           // Change the frame duration
           story.frameDuration = frame;
           // Order the storyboard by date
-          story.addOrderRule(["0-20", "20-40", "40-60", "60+", "NA"]);
+          story.addOrderRule(["female", "male"]);
 
-          myChart3.draw();
-
+          myChart1.draw();
 
           // Orphan the legends as they are consistent but by default they
           // will refresh on tick
-          myChart3.legends = [];
+          myChart1.legends = [];
           // Remove the storyboard label because the chart will indicate the
           // current age group instead of the label
           story.storyLabel.remove();
@@ -213,6 +162,114 @@
               firstTick = false;
           }
       
+
+
+
+        // Add a narrative to explain what this visualization is about.
+           var svg =  d3.select("#area2")
+                      .append("svg")
+                      .attr("width", width)
+                      .attr("height", 100)
+
+           svg.selectAll("title_text")           
+              .style("text-anchor", "middle")
+              .data(["This plot shows that overall, female passengers had better chance to survive than", 
+                     "male passengers, and passengers in higher class of cabins had better chance to", 
+                     "survive than those in lower class of cabins."])
+              .enter()
+              .append("text")                     
+              .attr("x", 20)           
+              .attr("y", function (d, i) { return 20 + i * 20; })
+              .text(function (d) { return d; });
+                      
+        
+          
+
+        // 2 - Titanic perished and survived based on number of siblings/spouse // 
+
+          var svg = d3.select("#area3")
+                      .append("svg")
+                      .attr("width", width)
+                      .attr("height", height)
+                      .append('g')
+                      .attr('class','chart');      
+
+
+          var myChart2 = new dimple.chart(svg, data);          
+          var x = myChart2.addCategoryAxis("x", "SibSp_category");
+          var y = myChart2.addMeasureAxis("y", "count");
+          myChart2.addSeries('Survival', dimple.plot.bar);
+          myChart2.addLegend(250, 50, 380, 40, "left");
+
+          svg.append("text")
+             .attr("x", myChart2._xPixels() + myChart2._widthPixels() / 2)
+             .attr("y", myChart2._yPixels() - 20)
+             .style("text-anchor", "middle")
+             .style("font-weight", "bold")
+             .text("Survival by Number of Siblings and Spouse Aboard");
+ 
+          myChart2.draw();
+
+          // Add a narrative to explain what this visualization is about.
+           var svg =  d3.select("#area4")
+                      .append("svg")
+                      .attr("width", width)
+                      .attr("height", 100)
+
+           svg.selectAll("title_text")           
+              .style("text-anchor", "middle")
+              .data(["SibSp_category indexes the number of siblings and spouse with the passenger aboard.",
+                     "This plot shows that passengers who travelled with fewer siblings/spouse had better",
+                     "chance to survive than those who travelled with more siblings/spouse."])
+              .enter()
+              .append("text")                     
+              .attr("x", 20)           
+              .attr("y", function (d, i) { return 20 + i * 20; })
+              .text(function (d) { return d; });
+                      
+
+        // 3 - Titanic perished and survived by age group // 
+          var svg = d3.select("#area5")
+                      .append("svg")
+                      .attr("width", width)
+                      .attr("height", height)
+                      .append('g')
+                      .attr('class','chart');
+
+          var myChart5 = new dimple.chart(svg, data);
+          var x = myChart5.addCategoryAxis("x", "Age_group");
+          x.addOrderRule(["NA", "0-15", "15-30", "30-45", "45-60", "60+"]);
+          var y = myChart5.addMeasureAxis("y", "count");
+          myChart5.addSeries('Survival', dimple.plot.bar);
+          myChart5.addLegend(80, 50, 380, 40, "left");
+
+          svg.append("text")
+             .attr("x", myChart5._xPixels() + myChart5._widthPixels() / 2)
+             .attr("y", myChart5._yPixels() - 20)
+             .style("text-anchor", "middle")
+             .style("font-weight", "bold")
+             .text("Survival by Age Group");
+
+          myChart5.draw();
+
+
+       // Add a narrative to explain what this visualization is about.
+           var svg =  d3.select("#area6")
+                      .append("svg")
+                      .attr("width", width)
+                      .attr("height", 100)
+
+           svg.selectAll("title_text")           
+              .style("text-anchor", "middle")
+              .data(["This plot shows that passengers' survival chance varies in terms of their age.",
+                     "It is noteworthy that youngest passengers (age below 15) had better survival", 
+                     "chance compared to older passengers."])
+              .enter()
+              .append("text")                     
+              .attr("x", 20)           
+              .attr("y", function (d, i) { return 20 + i * 20; })
+              .text(function (d) { return d; });
+      
         };
       </script>
   </head>
@@ -222,7 +279,7 @@
     Use D3 (not dimple.js) to load the TSV file
     and pass the contents of it to the draw function
     */
-  d3.csv("titanic2.csv", draw);
+  d3.csv("../data/titanic3.csv", draw);
   </script>
 </body>
 </html>
