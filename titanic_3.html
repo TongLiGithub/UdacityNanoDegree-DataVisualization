@@ -57,9 +57,9 @@
                       .attr('class','chart');      
 
 
-          var myChart2 = new dimple.chart(svg, data);
+          var myChart2 = new dimple.chart(svg, data);          
+          var x = myChart2.addCategoryAxis("x", "SibSp_category");
           var y = myChart2.addMeasureAxis("y", "count");
-          var x = myChart2.addCategoryAxis("x", "SibSp");
           myChart2.addSeries('Survival', dimple.plot.bar);
           myChart2.addLegend(250, 50, 380, 40, "left");
 
@@ -105,7 +105,7 @@
   </head>
 <body>
   <script type="text/javascript">  
-  d3.csv("../data/titanic.csv", draw);
+  d3.csv("data/titanic2.csv", draw);
   </script>
 </body>
 </html>
